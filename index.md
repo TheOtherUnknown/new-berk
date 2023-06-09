@@ -30,8 +30,26 @@ Installation on their hardware with Hetzner costs $19USD a month, and includes b
 Installation on our hardware or VPS costs a one-time fee of $50USD, plus $10USD a month if we want maintenance and support (06/23).
 
 ## Doing it Ourself
-Like with the Fandoms experiment, we can deploy our own instance using Ansible. 
+Like with the Fandoms experiment, we can deploy our own instance using Ansible. For this, we would primarily use a VPS.
 
+Most providers use 1 CPU core and 2GB of memory for their base instances of Synapse, so I've assumed those values for cost.
+
+### Providers
+|         | OVH         | DigitalOcean | Hetzner |
+|---------|-------------|--------------|---------|
+| Arch    | x64         | x64          | ARM64   |
+| CPU     | 1           | 1            | 2       |
+| RAM     | 2G          | 2G           | 4G      |
+| Data    | 250Mpbs ALL | 2kGB trans   | 20TB    |
+| Storage | 80G         | 50G          | 40G     |
+| Price   | $6.44       | $12          | €3.79   |
+| Term    | 1yr         |  None        | None    |
+
+ETKE supports installing on ARM, while the playbook alone may or may not. 
+## Storage
+Media must be stored outside of the VPS no matter if we get our own, or have ETKE manage it. Per our storage estimate, it would be unreasonable to store all media on the VPS. So, we'll likely need to use Backblaze B2. 
+
+Thankfully, the cost appears to be less than a dollar per month for about 100GB. Dang, good storage sure is cheap. Download costs and API costs are unknown at this time, but probably low. 
 # Possible Scenarios 
 
 ## Hard Cut
