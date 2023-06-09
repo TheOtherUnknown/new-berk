@@ -35,6 +35,7 @@ Like with the Fandoms experiment, we can deploy our own instance using Ansible. 
 Most providers use 1 CPU core and 2GB of memory for their base instances of Synapse, so I've assumed those values for cost.
 
 ### Providers
+
 |         | OVH         | DigitalOcean | Hetzner |
 |---------|-------------|--------------|---------|
 | Arch    | x64         | x64          | ARM64   |
