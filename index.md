@@ -67,5 +67,11 @@ Other storage costs:
 ## Hard Cut
 > *The petals must fall*
 
+This is the worst-case scenario, in which Valhalla is banned, destroyed, or Discord takes significant adverse action against us in particular. If this were to occur, we would need to do a few things to migrate.
+
+1. Grab what we can - Screenshots, copy paste, whatever. Grab all the significant moments that we can, while we can.
+2. Inform the users - If Valhalla is dead, we will need a way to tell the survivors where to go. There isn't really a great way to inform everyone at the moment. That's a problem.
+3. Build anew - Building a new platform will take time. There will need to be a temporary platform, at least for the techies, to communicate and build the new Berk. This would probably be something simple, like IRC.
+
 ## Normal Migration
 > *Not my snappiest comeback*
