@@ -50,7 +50,18 @@ ETKE supports installing on ARM, while the playbook alone may or may not.
 ## Storage
 Media must be stored outside of the VPS no matter if we get our own, or have ETKE manage it. Per our storage estimate, it would be unreasonable to store all media on the VPS. So, we'll likely need to use Backblaze B2. 
 
-Thankfully, the cost appears to be less than a dollar per month for about 100GB. Dang, good storage sure is cheap. Download costs and API costs are unknown at this time, but probably low. 
+Thankfully, the cost appears to be less than a dollar per month for about 100GB. Dang, good storage sure is cheap. Download costs and API costs are unknown at this time, but probably low.
+
+Other storage costs:
+
+|                    | OVH   | BackBlaze |
+|--------------------|-------|-----------|
+| Cost per GB/mon    | 0.008 | 0.005     |
+| API costs?         | No    | Yes       |
+| Download cost/GB   | 0.011 | 0.01      |
+| Own download free? | Yes   | NA        |
+| Storage type       | S3    | S3/B2     |
+
 # Possible Scenarios 
 
 ## Hard Cut
