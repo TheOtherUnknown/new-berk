@@ -44,7 +44,7 @@ Most providers use 1 CPU core and 2GB of memory for their base instances of Syna
 | Data    | 250Mpbs ALL | 2kGB trans   | 20TB    |
 | Storage | 80G         | 50G          | 40G     |
 | Price   | $6.44       | $12          | €3.79   |
-| Term    | 1yr         |  None        | None    |
+| Term    | 1yr         | None         | None    |
 
 ETKE supports installing on ARM, while the playbook alone may or may not. 
 ## Storage
@@ -73,5 +73,25 @@ This is the worst-case scenario, in which Valhalla is banned, destroyed, or Disc
 2. Inform the users - If Valhalla is dead, we will need a way to tell the survivors where to go. There isn't really a great way to inform everyone at the moment. That's a problem.
 3. Build anew - Building a new platform will take time. There will need to be a temporary platform, at least for the techies, to communicate and build the new Berk. This would probably be something simple, like IRC.
 
-## Normal Migration
+## 3 Day Migration
+> *So what are you going to do about it?*
+
+## 1 Week Migration
 > *Not my snappiest comeback*
+
+This is a more likely, and simplier scenario that assumes about a week timeline to perform the migration. This scenario attempts to migrate while using the current Valhalla for coordination and communication.
+
+### Moving Text Content
+Scraping content from Discord is [explicitly against the ToS](https://discord.com/developers/docs/policies-and-agreements/developer-policy#handle-data-with-care). While Discord has taken action to make unprivileged scraping more difficult, it should still be possible for a bot to be added to a server by a moderator with the message content intent for scraping. 
+
+It is very likely that Discord takes automated action against API useage that appears to be scraping, so we must be careful in case it ever becomes necessary. 
+
+The API endpoint for getting messages `/channels/{channel.id}/messages` can pull a maximum of 100 messages per channel at a time. This endpoint has dynamic ratelimits applied.
+I attempted testing to see about what the ratelimits are, but didn't have much luck. There don't appear to be many Discord API libraries that let you see under the hood easily to determine the limits sent back by the API. 
+
+However, projects like [Discord Chat Exporter](https://github.com/Tyrrrz/DiscordChatExporter) do exist, and there don't seem to be any complaints about bans or slowness due to ratelimits. ArchiveTeam also [maintains a wiki page](https://wiki.archiveteam.org/index.php/Discord) with tools and tips for archiving Discord.
+
+### Moving Media Content
+This is going to be the fun one. There is not published documentation on downloading content from the Discord CDN automatically, because you really aren't supposed to. Information on how it works is limited, but blog posts and other information points to the CDN being hosted by CloudFlare. ArchiveTeam has no notes on this subject, and most archivers available focus on text content. 
+
+CloudFlare itself is fairly well known for not being ok with scraping or automated requests, so this will likely be difficult, and take an extended amount of time. 
