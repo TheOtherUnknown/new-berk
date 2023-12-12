@@ -62,6 +62,35 @@ Other storage costs:
 | Own download free? | Yes   | NA        |
 | Storage type       | S3    | S3/B2     |
 
+# Migrating Notes & Tools
+When migrating the server, three things need to be moved. The users, the text, and the media. Below are some notes and tools regarding each of those things.
+
+## Moving Users
+The simplest way to grab the most users would be to use the existing server as a migration tool, if it exists. Here's an example:
+
+1. Mention `@everyone` with a message that the server is moving. Include a Google Form (or comparable) to collect email addresses and usernames
+2. Email status updates to these addresses using SendGrid or comparable 
+3. Import these emails and usernames into New Berk, and email out passwords
+
+This will probably get the majority of active users. The migration team will not be able to reach everyone, so members telling others on other platforms will be necessary. 
+
+
+## Moving Text Content
+Scraping content from Discord is [explicitly against the ToS](https://discord.com/developers/docs/policies-and-agreements/developer-policy#handle-data-with-care). While Discord has taken action to make unprivileged scraping more difficult, it should still be possible for a bot to be added to a server by a moderator with the message content intent for scraping. 
+
+It is very likely that Discord takes automated action against API useage that appears to be scraping, so we must be careful in case it ever becomes necessary. 
+
+The API endpoint for getting messages `/channels/{channel.id}/messages` can pull a maximum of 100 messages per channel at a time. This endpoint has dynamic ratelimits applied.
+I attempted testing to see about what the ratelimits are, but didn't have much luck. There don't appear to be many Discord API libraries that let you see under the hood easily to determine the limits sent back by the API. 
+
+However, projects like [Discord Chat Exporter](https://github.com/Tyrrrz/DiscordChatExporter) do exist, and there don't seem to be any complaints about bans or slowness due to ratelimits. ArchiveTeam also [maintains a wiki page](https://wiki.archiveteam.org/index.php/Discord) with tools and tips for archiving Discord.
+
+## Moving Media Content
+This is going to be the fun one. There is not published documentation on downloading content from the Discord CDN automatically, because you really aren't supposed to. Information on how it works is limited, but blog posts and other information points to the CDN being hosted by CloudFlare. ArchiveTeam has no notes on this subject, and most archivers available focus on text content. 
+
+CloudFlare itself is fairly well known for not being ok with scraping or automated requests, so this will likely be difficult, and take an extended amount of time. 
+Migrating media content will almost certainly have to be limited to a specific duration in almost all scenarios.
+
 # Possible Scenarios 
 
 ## Hard Cut
@@ -73,7 +102,7 @@ This is the worst-case scenario, in which Valhalla is banned, destroyed, or Disc
 2. Inform the users - If Valhalla is dead, we will need a way to tell the survivors where to go. There isn't really a great way to inform everyone at the moment. That's a problem.
 3. Build anew - Building a new platform will take time. There will need to be a temporary platform, at least for the techies, to communicate and build the new Berk. This would probably be something simple, like IRC.
 
-## 3 Day Migration
+## <=3 Day Migration
 > *So what are you going to do about it?*
 
 In a time limited situation, it will likely be necessary for us to download content and store it with metadata in an intermediary location before standing up the replacement. A central SQL database hosted somewhere would likely be our best bet. 
@@ -92,22 +121,24 @@ CREATE TABLE valhalla (
 
 In this scenario, it is unlikely that media content or all message content will be preserved. It also may be a good idea to limit archival initially to a certain duration, such as the last 4 years, or omit some channels entirely. In an attempt to access channel priorities, I've created this [channel burndown table](burndown.md) with notes.
 
-## 1 Week Migration
+Step by step:
+1. Notify users and collect emails
+2. Build intermediary database
+3. Freeze all channels, minus one or so
+4. Dump content according to burndown list until server closure
+5. Build New Berk
+6. Add content and users
+
+## 1 Week+ Migration
 > *Not my snappiest comeback*
 
 This is a more likely, and simplier scenario that assumes about a week timeline to perform the migration. This scenario attempts to migrate while using the current Valhalla for coordination and communication.
 
-### Moving Text Content
-Scraping content from Discord is [explicitly against the ToS](https://discord.com/developers/docs/policies-and-agreements/developer-policy#handle-data-with-care). While Discord has taken action to make unprivileged scraping more difficult, it should still be possible for a bot to be added to a server by a moderator with the message content intent for scraping. 
+In this situation, we could likely stand up the new solution, and migrate messages directly to New Berk as they are archived. This would eliminate the need for an intermediary database like in the 3 day migration.
 
-It is very likely that Discord takes automated action against API useage that appears to be scraping, so we must be careful in case it ever becomes necessary. 
-
-The API endpoint for getting messages `/channels/{channel.id}/messages` can pull a maximum of 100 messages per channel at a time. This endpoint has dynamic ratelimits applied.
-I attempted testing to see about what the ratelimits are, but didn't have much luck. There don't appear to be many Discord API libraries that let you see under the hood easily to determine the limits sent back by the API. 
-
-However, projects like [Discord Chat Exporter](https://github.com/Tyrrrz/DiscordChatExporter) do exist, and there don't seem to be any complaints about bans or slowness due to ratelimits. ArchiveTeam also [maintains a wiki page](https://wiki.archiveteam.org/index.php/Discord) with tools and tips for archiving Discord.
-
-### Moving Media Content
-This is going to be the fun one. There is not published documentation on downloading content from the Discord CDN automatically, because you really aren't supposed to. Information on how it works is limited, but blog posts and other information points to the CDN being hosted by CloudFlare. ArchiveTeam has no notes on this subject, and most archivers available focus on text content. 
-
-CloudFlare itself is fairly well known for not being ok with scraping or automated requests, so this will likely be difficult, and take an extended amount of time. 
+Step by step:
+1. Notify users and collect emails
+2. Stand up New Berk
+3. Dump content according to burndown into New Berk
+4. Freeze archived channels 
+5. Move users
