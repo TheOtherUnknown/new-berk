@@ -76,6 +76,22 @@ This is the worst-case scenario, in which Valhalla is banned, destroyed, or Disc
 ## 3 Day Migration
 > *So what are you going to do about it?*
 
+In a time limited situation, it will likely be necessary for us to download content and store it with metadata in an intermediary location before standing up the replacement. A central SQL database hosted somewhere would likely be our best bet. 
+
+Here's an example schema for an intermediary PostgreSQL database:
+```
+CREATE TABLE valhalla (
+    messageid varchar PRIMARY KEY, # The discord message ID, which should be unique
+    msgdate timestamp,
+    content text,
+    channel varchar,
+    sender varchar, # The string name of the sender
+    senderid varchar # The UID of the sender
+);
+```
+
+In this scenario, it is unlikely that media content or all message content will be preserved. It also may be a good idea to limit archival initially to a certain duration, such as the last 4 years, or omit some channels entirely. In an attempt to access channel priorities, I've created this [[burndown.md|channel burndown table]] with notes. 
+
 ## 1 Week Migration
 > *Not my snappiest comeback*
 
