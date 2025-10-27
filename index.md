@@ -14,3 +14,4 @@ Good luck out there.
 * [Costs & Platforms](costs-platforms.md) - Where do we go, and what will it cost?
 * [Moving](moving.md) - How do we move?
 * [Valhalla Survey](survey.md) - How big is Valhalla, anyway?
+* [Other Software](software.md) - What software should we use anyway?
